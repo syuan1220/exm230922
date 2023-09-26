@@ -1,72 +1,84 @@
-﻿<!DOCTYPE html>
-<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>test LIFF</title>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="Scripts/jquery-3.3.1.min.js"></script>
-    <script src="Scripts/bootstrap.min.js"></script>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <script>
-        //init LIFF
-        function initializeApp(data) {
-            //取得QueryString
-            let urlParams = new URLSearchParams(window.location.search);
-            //顯示QueryString
-            $('#QueryString').val(urlParams.toString());
-            //顯示UserId
-            $('#userid').val(data.context.userId);
-        }
-
-        //ready
-        $(function () {
-            //init LIFF
-            liff.init(function (data) {
-                initializeApp(data);
-            });
-
-            //ButtonGetProfile
-            $('#ButtonGetProfile').click(function () {
-                //取得User Proile
-                liff.getProfile().then(
-                    profile=> {
-                        //顯示在text box中
-                        $('#UserInfo').val(profile.displayName);
-                        //居然可以alert
-                        alert('done');
-                    }
-                );
-            });
-
-            //ButtonSendMsg
-            $('#ButtonSendMsg').click(function () {
-                liff.sendMessages([
-                 {
-                     type: 'text',
-                     text: $('#msg').val()
-                 }
-                ])
-               .then(() => {
-                   alert('done');
-               })
-            });
-        });
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFF Starter</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-        <div class="row">
-            <div class="col-md-6" style="margin:5px">
-                <label>user id:</label>
-                <input class="form-control" type="text" id="userid" />   <br />
-                <label>QueryString:</label>
-                <input class="form-control" type="text" id="QueryString" /><br />
-                <button class="btn btn-primary" id="ButtonGetProfile">Get Profile</button>
-                <input class="form-control" type="text" id="UserInfo" /><br />
-                <label>要傳送的訊息:</label>
-                <input class="form-control" type="text" id="msg" value="測試" /><br />
-                <button class="btn btn-primary" id="ButtonSendMsg"  >要傳送的訊息</button>
-            </div>
+    <div class="buttongroup">
+        <div class="buttonrow">
+            <button id="openwindowbutton">Open Window</button>
+            <button id="closewindowbutton">Close Window</button>
         </div>
+        <div class="buttonrow">
+            <button id="getaccesstoken">Get Access Token</button>
+            <button id="getprofilebutton">Get Profile</button>
+            <button id="sendmessagebutton">Send Message</button>
+        </div>
+    </div>
+
+    <div id="accesstokendata">
+        <h2>Access Token</h2>
+        <a href="#" onclick="toggleAccessToken()">Close Access Token</a>
+        <table border="1">
+            <tr>
+                <th>accessToken</th>
+                <td id="accesstokenfield"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="profileinfo">
+        <h2>Profile</h2>
+        <a href="#" onclick="toggleProfileData()">Close Profile</a>
+        <div id="profilepicturediv">
+        </div>
+        <table border="1">
+            <tr>
+                <th>userId</th>
+                <td id="useridprofilefield"></td>
+            </tr>
+            <tr>
+                <th>displayName</th>
+                <td id="displaynamefield"></td>
+            </tr>
+            <tr>
+                <th>statusMessage</th>
+                <td id="statusmessagefield"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="liffdata">
+        <h2>LIFF Data</h2>
+        <table border="1">
+            <tr>
+                <th>language</th>
+                <td id="languagefield"></td>
+            </tr>
+            <tr>
+                <th>context.viewType</th>
+                <td id="viewtypefield"></td>
+            </tr>
+            <tr>
+                <th>context.userId</th>
+                <td id="useridfield"></td>
+            </tr>
+            <tr>
+                <th>context.utouId</th>
+                <td id="utouidfield"></td>
+            </tr>
+            <tr>
+                <th>context.roomId</th>
+                <td id="roomidfield"></td>
+            </tr>
+            <tr>
+                <th>context.groupId</th>
+                <td id="groupidfield"></td>
+            </tr>
+        </table>
+    </div>
+    
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="liff-starter.js"></script>
 </body>
-</html>
